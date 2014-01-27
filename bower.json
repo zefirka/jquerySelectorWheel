@@ -1,0 +1,9 @@
+{
+ "name": "jquerySelctorWheel",
+ "main" : "./jquery.SelctorWheel.js",
+ "version": "0.0.1",
+ "dependencies": { 
+    "jquery": ">=1.2.2",
+    "jquery-mousewheel" : ">=3.1.1"
+  }
+}
