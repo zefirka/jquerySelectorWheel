@@ -1,0 +1,6 @@
+##################
+*~
+.bzr/*
+nbproject/*
+assets/*
+bower_components/*

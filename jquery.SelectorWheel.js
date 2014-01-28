@@ -1,14 +1,16 @@
 (function($) {
 $.fn.SelectorWheel = function(options) {
   var $container = this;
+  var $spanblock;
+
   var settings = $.extend( {
     'value' : $container.attr("value")===undefined ? 0 : parseInt($container.attr("value")),
-    'symbolCount' : $container.attr("length")===undefined ? 3 : parseInt($container.attr("length")),
+    'symCount' : $container.attr("length")===undefined ? 3 : parseInt($container.attr("length")),
     'valueFrom'  : $container.attr("valueFrom")===undefined ? 0 : $container.attr("valueFrom"),
     'valueTo'  : $container.attr("valueTo")===undefined ? 999 : $container.attr("valueTo"),
-    "changeSignByClick" : false,
+    "changeSign" : false,
     "sensetivity" : 1,
-    "overLockWheelEvent" : true,
+    "capture" : true,
     "eachSymbol" : false
   }, options);
 
@@ -16,7 +18,7 @@ $.fn.SelectorWheel = function(options) {
     value : settings.value,
     sign : 1, //знак операции
     getSymbolDifference : function(){
-      return (settings.symbolCount - Private.value.toString().length);
+      return (settings.symCount - Private.value.toString().length);
     },
     customSymbol : function(x){
       var diff = Private.getSymbolDifference();
@@ -28,7 +30,7 @@ $.fn.SelectorWheel = function(options) {
     redrawFull : function(value){ 
       value = Private.customSymbol(value);
 
-      for(var i=0;i<settings.symbolCount;i++){
+      for(var i=0;i<settings.symCount;i++){
         symbol = value.toString().charAt(i);      
         $($(".symbol", $container)[i]).html(symbol);
       }
@@ -54,7 +56,7 @@ $.fn.SelectorWheel = function(options) {
       Private.cells[event.position].value = result;
       var t = 0;
       for(var i=0,l=Private.cells.length;i<l;i++){
-        t += Math.pow(10,settings.symbolCount-i-1)*Private.cells[i].value;
+        t += Math.pow(10,settings.symCount-i-1)*Private.cells[i].value;
       }
       t *= Private.sign;
       if(t<=settings.valueTo && t>=settings.valueFrom){
@@ -92,14 +94,14 @@ $.fn.SelectorWheel = function(options) {
         Private.value *= Private.sign;
         Private.sign = 1;        
         if(Private.stack!=0){
-          Private.value += Private.stack*Math.pow(10,settings.symbolCount-1);
+          Private.value += Private.stack*Math.pow(10,settings.symCount-1);
         }
         Private.cells[0].value=Private.stack;
       }else{
         $(this).html("-");
         Private.stack = Private.cells[0].value;
         if(Private.cells[0].value!=0){
-          Private.value -= Private.cells[0].value*Math.pow(10,settings.symbolCount-1);
+          Private.value -= Private.cells[0].value*Math.pow(10,settings.symCount-1);
         }
         Private.cells[0].value=0;
         
@@ -111,19 +113,30 @@ $.fn.SelectorWheel = function(options) {
     setMask : function(x){
       var drawUp = Private.customSymbol(x);
 
-      for(var i=0;i<settings.symbolCount;i++){
+      for(var i=0;i<settings.symCount;i++){
         $($(".symbol", $container)[i]).html(drawUp.charAt(i));
         if(settings.eachSymbol){Private.cells[i].value=parseInt(drawUp.charAt(i))}
       }
+    },
+    drawLights : function(key){
+      if(key=='-up'){
+        $container.append("<div class='lightning lightning-up'></div>");
+      }else 
+      if(key=='-down'){
+        $container.append("<div class='lightning lightning-down'></div>");
+      }
+      $(".lightning").css("width", $container.width()-1);
     }
   }
   
 
   function init(){
+    $container.append("<div class='spanblock'></div>")
+    $spanblock = $(".spanblock", $container); 
     var drawUp = Private.customSymbol(Private.value);
 
-    for(var i=0;i<settings.symbolCount;i++){
-      $container.append("<span class='symbol'>"+drawUp.charAt(i)+"</span>")
+    for(var i=0;i<settings.symCount;i++){
+      $spanblock.append("<span class='symbol'>"+drawUp.charAt(i)+"</span>")
     }
       
     if(settings.eachSymbol){ //если к каждому символу надо привязать события
@@ -136,7 +149,7 @@ $.fn.SelectorWheel = function(options) {
         
       })
 
-      var rechanger = settings.changeSignByClick ? Private.cells[0].object.on("click", Private.changeToMinus) : undefined;
+      var rechanger = settings.changeSign ? Private.cells[0].object.on("click", Private.changeToMinus) : undefined;
 
 
     }else{ //а это если к контейнеру
@@ -145,7 +158,10 @@ $.fn.SelectorWheel = function(options) {
     }
   }
 
+  Private.drawLights("-up");
   init();
+  Private.drawLights("-down");
+  
 
   //надобно ли вводить этот метод в жквери объект?
   this.getProperty = function(x){

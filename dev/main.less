@@ -3,20 +3,44 @@
   height: 26px;
   padding: 2px;
   background-color: black;
+  border-radius: 5px;
   
   .symbol{
     height: 18px;
     background: #eee;
     font-family: Arial, sans-serif;
     border: solid 1px gray;
-    margin: 0px 3px;
+    margin: 0px 2px;
     margin-top: 1px;
-    width: 10px;
-    max-width: 10px;
-    min-width: 10px;
+    width: 8px;
+    max-width: 8px;
+    min-width: 8px;
     text-align: center;
     display: inline-block;
     padding: 2px 3px;
     cursor: pointer;
   }
+
+  .lightning{
+    width: 80px;
+    height: 5px;
+    display: inline-block;
+    position: absolute;
+    content: "";
+  }
+
+  .lightning-up{    
+    -webkit-box-shadow: 0px 10px 5px 0px rgba(22, 33, 50, 0.47);
+    -moz-box-shadow: 0px 10px 5px 0px rgba(22, 33, 50, 0.47);
+    box-shadow: 0px 10px 5px 0px rgba(22, 33, 50, 0.47);
+    top: 0px;
+  }
+
+  .lightning-down{
+    -webkit-box-shadow: 0px -10px 5px 0px rgba(22, 33, 50, 0.47);
+    -moz-box-shadow:    0px -10px 5px 0px rgba(22, 33, 50, 0.47);
+    box-shadow:         0px -10px 5px 0px rgba(22, 33, 50, 0.47);
+    top: 41px;
+  }
 }
+
