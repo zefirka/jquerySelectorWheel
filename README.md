@@ -2,12 +2,17 @@
 
 ##Usage##
 
-Including files into DOM:
-	<code>&lt;script src="jquery.SelectorWheel.js"&gt;&lt;/script&gt;</code>
-	<code>&lt;link rel="stylesheet" type="text/css" href="jqSelectorWheel.css"&gt;</code>
-
+Including files into DOM:<br>
 <pre>
-	&lt;div id='myPrettyID' class='SelectorWheel' length='4' valueTo='8888' valueFrom='0' value="666&gt;&lt;/div&gt;
+	&lt;script src="jquery.SelectorWheel.js"&gt;&lt;/script&gt;
+	&lt;link rel="stylesheet" type="text/css" href="jqSelectorWheel.css"&gt;
+</pre>
+<pre>
+	&lt;div id='myPrettyID' class='SelectorWheel' 
+							length='4' 
+							valueTo='8888' 
+							valueFrom='0' 
+							value="666&gt;&lt;/div&gt;
 	&lt;script&gt; 
 		var jqSelectorWheel = $("#myPrettyID").SelectorWheel({
 			//settings JSON
@@ -38,7 +43,7 @@ Attributes <code>length</code>, <code>value</code>, <code>valueFrom</code>, <cod
 |-------------|-----------------------|------------------------------------------|
 | eachSymbol  | false                 | Make every symbol change independently   |
 |-------------|-----------------------|------------------------------------------|
-
+</pre>
 
 **Listening for events**
 
@@ -48,8 +53,6 @@ Attributes <code>length</code>, <code>value</code>, <code>valueFrom</code>, <cod
 4. MozMousePixelScroll
 
 1 per 40 px scroll.
-
-</pre>
 
 ##Development##
 bower files unpacking into bower_components directory; Dependencies is: **jQuery** and **jQuery.mousecheel**.
