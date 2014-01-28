@@ -2,41 +2,59 @@
   display: inline-block;
   height: 26px;
   padding: 2px;
-  background-color: black;
-  border-radius: 5px;
   
+  background: rgb(42, 38, 42);
+  background: -moz-linear-gradient(0deg, rgb(42, 38, 42) 20%, rgb(121, 121, 121) 100%);
+  background: -webkit-linear-gradient(0deg, rgb(42, 38, 42) 20%, rgb(121, 121, 121) 100%);
+  background: -o-linear-gradient(0deg, rgb(42, 38, 42) 20%, rgb(121, 121, 121) 100%);
+  background: -ms-linear-gradient(0deg, rgb(42, 38, 42) 20%, rgb(121, 121, 121) 100%);
+  background: linear-gradient(90deg, rgb(42, 38, 42) 20%, rgb(121, 121, 121) 100%);
+
+
+  border-radius: 5px;
+  z-index: 4;
+
   .symbol{
     height: 18px;
     background: #eee;
     font-family: Arial, sans-serif;
-    border: solid 1px gray;
     margin: 0px 2px;
-    margin-top: 1px;
-    width: 8px;
-    max-width: 8px;
-    min-width: 8px;
+    margin-top: 2px;
+    width: 10px;
+    max-width: 10px;
+    min-width: 10px;
     text-align: center;
     display: inline-block;
     padding: 2px 3px;
     cursor: pointer;
+
+    -webkit-box-shadow: 3px -1px 2px 0px rgba(0, 0, 0, 0.85);
+    -moz-box-shadow:    3px -1px 2px 0px rgba(0, 0, 0, 0.85);
+    box-shadow:         3px -1px 2px 0px rgba(0, 0, 0, 0.85);
+    z-index: 5;
   }
 
-  .lightning{
+  .spanblock{
+    white-space: nowrap;
+  }
+
+  .shadow{
     width: 80px;
     height: 5px;
     display: inline-block;
     position: absolute;
     content: "";
+    z-index: 6;
   }
 
-  .lightning-up{    
+  .shadow-up{    
     -webkit-box-shadow: 0px 10px 5px 0px rgba(22, 33, 50, 0.47);
     -moz-box-shadow: 0px 10px 5px 0px rgba(22, 33, 50, 0.47);
     box-shadow: 0px 10px 5px 0px rgba(22, 33, 50, 0.47);
     top: 0px;
   }
 
-  .lightning-down{
+  .shadow-down{
     -webkit-box-shadow: 0px -10px 5px 0px rgba(22, 33, 50, 0.47);
     -moz-box-shadow:    0px -10px 5px 0px rgba(22, 33, 50, 0.47);
     box-shadow:         0px -10px 5px 0px rgba(22, 33, 50, 0.47);

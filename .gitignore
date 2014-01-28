@@ -1,6 +1,7 @@
 ##################
 *~
 .bzr/*
+.last-commit
 nbproject/*
 assets/*
 bower_components/*

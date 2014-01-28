@@ -17,6 +17,9 @@ $.fn.SelectorWheel = function(options) {
   var Private = {
     value : settings.value,
     sign : 1, //знак операции
+    graphics : {
+
+    },
     getSymbolDifference : function(){
       return (settings.symCount - Private.value.toString().length);
     },
@@ -120,17 +123,28 @@ $.fn.SelectorWheel = function(options) {
     },
     drawLights : function(key){
       if(key=='-up'){
-        $container.append("<div class='lightning lightning-up'></div>");
+        $container.append("<div class='shadow shadow-up'></div>");
+        Private.graphics.shadowUp = $(".shadow-up", $container);
       }else 
       if(key=='-down'){
-        $container.append("<div class='lightning lightning-down'></div>");
+        $container.append("<div class='shadow shadow-down'></div>");
+        Private.graphics.shadowDown = $(".shadow-down", $container);
+      }else{
+        Private.positioning();
+        $(window).resize(Private.positioning);
       }
-      $(".lightning").css("width", $container.width()-1);
+    },
+    positioning : function(){
+        Private.graphics.shadowUp.css("width", $container.width()-1);
+        Private.graphics.shadowDown.css("width", $container.width()-1);
+        Private.graphics.shadowUp.css("top", $container.position().top-8);
+        Private.graphics.shadowDown.css("top", $container.position().top+34);
     }
   }
   
 
   function init(){
+    Private.drawLights("-up");
     $container.append("<div class='spanblock'></div>")
     $spanblock = $(".spanblock", $container); 
     var drawUp = Private.customSymbol(Private.value);
@@ -145,23 +159,20 @@ $.fn.SelectorWheel = function(options) {
       $(".symbol", $container).each(function(){
         Private.cells.push({object : $(this), value : $(this).html()}) //какая-то избыточная ерунда, хорошо бы избавиться от этого 
         Private.bindEvents($(this), position++);
-        $(this).on("mouseScrolled", Private.viewCallback);
-        
+        $(this).on("mouseScrolled", Private.viewCallback);       
       })
-
       var rechanger = settings.changeSign ? Private.cells[0].object.on("click", Private.changeToMinus) : undefined;
-
-
     }else{ //а это если к контейнеру
       Private.bindEvents($container);
       $container.on("mouseScrolled", Private.separateViewCallback);
     }
+    Private.drawLights("-down");
   }
 
-  Private.drawLights("-up");
-  init();
-  Private.drawLights("-down");
   
+  init();
+  
+  Private.drawLights();  
 
   //надобно ли вводить этот метод в жквери объект?
   this.getProperty = function(x){
