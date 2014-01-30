@@ -43,6 +43,9 @@ Attributes <code>length</code>, <code>value</code>, <code>valueFrom</code>, <cod
 |-------------|-----------------------|------------------------------------------|
 | eachSymbol  | false                 | Make every symbol change independently   |
 |-------------|-----------------------|------------------------------------------|
+| hiddenInput | { }                   | Hidden input to collect values           |
+|-------------|-----------------------|------------------------------------------|
+
 </pre>
 
 **Listening for events**

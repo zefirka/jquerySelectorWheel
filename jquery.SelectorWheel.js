@@ -11,22 +11,21 @@ $.fn.SelectorWheel = function(options) {
     "changeSign" : false,
     "sensetivity" : 1,
     "capture" : true,
-    "eachSymbol" : false
+    "eachSymbol" : false 
   }, options);
 
   var Private = {
-    value : settings.value,
+    value : settings.value, 
     sign : 1, //знак операции
-    graphics : {
-
-    },
+    graphics : {}, //пустой объект для графических элементов
     getSymbolDifference : function(){
       return (settings.symCount - Private.value.toString().length);
     },
     customSymbol : function(x){
       var diff = Private.getSymbolDifference();
+      x=x.toString(); 
       while(diff-- > 0){
-        x = "0" + x.toString();
+        x = "0" + x;
       }
       return x;
     },
@@ -34,7 +33,7 @@ $.fn.SelectorWheel = function(options) {
       value = Private.customSymbol(value);
 
       for(var i=0;i<settings.symCount;i++){
-        symbol = value.toString().charAt(i);      
+        symbol = value.charAt(i);      
         $($(".symbol", $container)[i]).html(symbol);
       }
     },
