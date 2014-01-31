@@ -43,6 +43,12 @@ Attributes <code>length</code>, <code>value</code>, <code>valueFrom</code>, <cod
 |-------------|-----------------------|-------------------------------------------|
 | eachSymbol  | false                 | Make every symbol change independently    |
 |-------------|-----------------------|-------------------------------------------|
+</pre>
+
+**Hidden input**
+If you want use hidden input to collect value of wheel selector control - switch hiddenInput.enabled value to true and set up hiddenInput.id and hiddenInput.name for your input. Value of input will update automaticaly. 
+<pre>
+|-------------|-----------------------|-------------------------------------------|
 | hiddenInput | Object{}              | Hidden input to collect values            |
 |-------------|-----------------------|-------------------------------------------|
 | * enabled   | false                 | Enable hidden input or not                |
@@ -51,11 +57,7 @@ Attributes <code>length</code>, <code>value</code>, <code>valueFrom</code>, <cod
 |-------------|-----------------------|-------------------------------------------|
 | * name      | undefined             | 'name' attribute of hidden input          |
 |-------------|-----------------------|-------------------------------------------|
-
 </pre>
-
-**Hidden input settings**
-If you want use hidden input to collect value of wheel selector control - switch hiddenInput.enabled value to true and set up hiddenInput.id and hiddenInput.name for your input. Value of input will update automaticaly. 
 
 **Listening for events**
 
