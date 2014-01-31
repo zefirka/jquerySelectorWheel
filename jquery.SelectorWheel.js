@@ -12,7 +12,7 @@ $.fn.SelectorWheel = function(options) {
     "sensetivity" : 1,
     "capture" : true,
     "eachSymbol" : true ,
-    "type" : "int-12", //наверное имеет смысл, только если eachSymbol повернут на true
+    "type" : "int-10", //наверное имеет смысл, только если eachSymbol повернут на true
     "alphabet" : "[0123456789]", 
     "hiddenInput" : {
       "enabled" : false
@@ -46,7 +46,6 @@ $.fn.SelectorWheel = function(options) {
     alphabet : settings.alphabet,
     alphabetLength : settings.alphabet.length-2,
     sign : 1, //знак операции
-    graphics : {}, //пустой объект для графических элементов
     getSymbolDifference : function(){
       return (settings.symCount - that.value.toString().length);
     },
@@ -155,25 +154,6 @@ $.fn.SelectorWheel = function(options) {
         if(settings.eachSymbol){that.cells[i].value=parseInt(drawUp.charAt(i))}
       }
     },
-    drawLights : function(key){
-      if(key=='-up'){
-        $container.append("<div class='shadow shadow-up'></div>");
-        that.graphics.shadowUp = $(".shadow-up", $container);
-      }else 
-      if(key=='-down'){
-        $container.append("<div class='shadow shadow-down'></div>");
-        that.graphics.shadowDown = $(".shadow-down", $container);
-      }else{
-        that.positioning();
-        $(window).resize(that.positioning);
-      }
-    },
-    positioning : function(){
-        that.graphics.shadowUp.css("width", $container.width()-1);
-        that.graphics.shadowDown.css("width", $container.width()-1);
-        that.graphics.shadowUp.css("top", $container.position().top-8);
-        that.graphics.shadowDown.css("top", $container.position().top+34);
-    },
     setHiddenInput : function(id, name){
       $container.after("<input type='hidden' id='"+id+"' name='"+name+"' value='"+that.value+"'>");
       that.hiddenInput = $container.next();
@@ -181,7 +161,7 @@ $.fn.SelectorWheel = function(options) {
         that.hiddenInput.attr("value", x.val);
       })
     },
-    setAlphabet : function(){
+    configureAlphabet : function(){
       var alphabet = "[";
       if(settings.type.indexOf("int")==0){
 
@@ -197,20 +177,47 @@ $.fn.SelectorWheel = function(options) {
     }
   }
   
+  //все графические движняки
+  var visual = {
+    graphics : {},
+    drawShadow : function(key){
+      if(key=='-up'){
+        $container.append("<div class='shadow shadow-up'></div>");
+        visual.graphics.shadowUp = $(".shadow-up", $container);
+      }else 
+      if(key=='-down'){
+        $container.append("<div class='shadow shadow-down'></div>");
+        visual.graphics.shadowDown = $(".shadow-down", $container);
+      }else{
+        visual.positioning();
+        $(window).resize(visual.positioning);
+      }
+    },
+    positioning : function(){
+      visual.graphics.shadowUp.css("width", $container.width()-1);
+      visual.graphics.shadowDown.css("width", $container.width()-1);
+      visual.graphics.shadowUp.css("top", $container.position().top-8);
+      visual.graphics.shadowDown.css("top", $container.position().top+34);
+    },
+    prepare : function(){
+      visual.drawShadow("-up"); //отрисовываем тень сверзху
+      
+      $container.append("<div class='spanblock'></div>"); //добавляем элементы и отрисовываем нужное кол-во
+      $spanblock = $(".spanblock", $container); 
+      var drawUp = that.customSymbol(that.value);
+      for(var i=0;i<settings.symCount;i++){
+        $spanblock.append("<span class='symbol'>"+drawUp.charAt(i)+"</span>")
+      }
+
+      visual.drawShadow("-down"); //отрисовываем тень снизу
+      visual.drawShadow(); //прицепляем хэндлеры для resize()
+    }
+  }
 
 
   function init(){
-    that.drawLights("-up");
-    that.setAlphabet();
-
-    $container.append("<div class='spanblock'></div>")
-    $spanblock = $(".spanblock", $container); 
-    
-    var drawUp = that.customSymbol(that.value);
-
-    for(var i=0;i<settings.symCount;i++){
-      $spanblock.append("<span class='symbol'>"+drawUp.charAt(i)+"</span>")
-    }
+    visual.prepare(); 
+    that.configureAlphabet();
     
     if(settings.eachSymbol){ //если к каждому символу надо привязать события
       var position = 0;
@@ -221,7 +228,7 @@ $.fn.SelectorWheel = function(options) {
         $(this).on("mouseScrolled", that.viewEach);       
       })
       var rechanger = settings.changeSign ? that.cells[0].object.on("click", that.changeToMinus) : undefined;
-    }else{ //а это если к контейнеру
+    }else{ //а это если к контейнеру целиком, что можно пока только для десятичных целых чисел
       if(settings.type=='int-10'){
         that.bindEvents($container);
         $container.on("mouseScrolled", that.viewAll);
@@ -229,8 +236,8 @@ $.fn.SelectorWheel = function(options) {
         throw("Error: You can't use type='"+settings.type+"' with property eachSymbol='false'\n");
       }
     }
-    that.drawLights("-down");
 
+    //подкючает hidden input
     if(settings.hiddenInput.enabled){
       that.setHiddenInput(settings.hiddenInput.id, settings.hiddenInput.name);
     }
@@ -239,7 +246,7 @@ $.fn.SelectorWheel = function(options) {
   
   init();
   
-  that.drawLights();  
+  
 
   //так или сразу пихать паблик. И вообще нужно ли это?
   for(var e in Public){
