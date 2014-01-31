@@ -12,7 +12,7 @@ $.fn.SelectorWheel = function(options) {
     "sensetivity" : 1,
     "capture" : true,
     "eachSymbol" : true ,
-    "type" : "int-16", //наверное имеет смысл, только если eachSymbol повернут на true
+    "type" : "int-12", //наверное имеет смысл, только если eachSymbol повернут на true
     "alphabet" : "[0123456789]", 
     "hiddenInput" : {
       "enabled" : false
@@ -21,8 +21,7 @@ $.fn.SelectorWheel = function(options) {
   }, options);
 
 
-
-
+  //Public methods to export out.  
   var Public = {
     getValueFromLetter : function(x){
       return that.alphabet.indexOf(x)-1;
@@ -40,7 +39,6 @@ $.fn.SelectorWheel = function(options) {
         throw("Error: Requested property is that function. Access denied.")
       }
     }
-
   }
 
   var that = {
@@ -242,6 +240,11 @@ $.fn.SelectorWheel = function(options) {
   init();
   
   that.drawLights();  
+
+  //так или сразу пихать паблик. И вообще нужно ли это?
+  for(var e in Public){
+    this[e] = Public[e];
+  }
 
   return this;
 };

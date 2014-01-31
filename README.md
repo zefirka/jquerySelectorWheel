@@ -52,6 +52,11 @@ Attributes <code>length</code>, <code>value</code>, <code>valueFrom</code>, <cod
 | * name      | undefined             | 'name' attribute of hidden input          |
 |-------------|-----------------------|-------------------------------------------|
 
+** Cusotom alphabet **
+To customize alphabet and symbol order use next two properties in **settings.json**:
+1. <code>type</code>  - Sets input value data type. By default type is <code>'int-10'</code>, where last 2 digit says about type value's base. 10 is decimal, 16 is hexadecimal etc. You can use all 2 digital bases from 10 to 99. (Issue: wtf, why? If I want oct or binar? Need to be fixed). Also you can use type <code>'string'</code>. (Current version: available only integer types for 2-digital value base).
+2. <code>alphabet</code> - Sets alphabet's order and symbols. For 'int-16' alphabet is '[0132456789abcdef]'. For string type - sets order. For integer types calculates automaticaly.
+
 </pre>
 
 **Hidden input settings**
