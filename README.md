@@ -24,27 +24,31 @@ Attributes <code>length</code>, <code>value</code>, <code>valueFrom</code>, <cod
 
 **Settings JSON**
 <pre>
-|=============|=======================|==========================================|
-|  PROPERTY   |  STD VALUE            |      DESCRIPTION                         |
-|=============|=======================|==========================================| 
-|  value      | 'value' attr or 0     | Initial value of controller              |
-|-------------|-----------------------|------------------------------------------|
-|  symCount   | 'length' attr or 3    | Count of symbol cells                    |
-|-------------|-----------------------|------------------------------------------|
-| valueFrom   | 'valueFrom' attr or 0 | Minimal value of controller              |
-|-------------|-----------------------|------------------------------------------|
-| valueTo     | 'valueTo' attr or 999 | Maximal value of controller              |
-|-------------|-----------------------|------------------------------------------|
-| changeSign  | false                 | Make value sign opposite by click or not |
-|-------------|-----------------------|------------------------------------------|
-| sensetivity | 1                     | Value from 0 to 1. Multiplied by scroll  |
-|-------------|-----------------------|------------------------------------------|
-| capture     | true                  | Capture event for scroll window          |
-|-------------|-----------------------|------------------------------------------|
-| eachSymbol  | false                 | Make every symbol change independently   |
-|-------------|-----------------------|------------------------------------------|
-| hiddenInput | { }                   | Hidden input to collect values           |
-|-------------|-----------------------|------------------------------------------|
+|=============|=======================|===========================================|
+|  PROPERTY   |  STD VALUE            |      DESCRIPTION                          |
+|=============|=======================|===========================================| 
+|  value      | 'value' attr or 0     | Initial value of controller               |
+|-------------|-----------------------|-------------------------------------------|
+|  symCount   | 'length' attr or 3    | Count of symbol cells                     |
+|-------------|-----------------------|-------------------------------------------|
+| valueFrom   | 'valueFrom' attr or 0 | Minimal value of controller               |
+|-------------|-----------------------|-------------------------------------------|
+| valueTo     | 'valueTo' attr or 999 | Maximal value of controller               |
+|-------------|-----------------------|-------------------------------------------|
+| changeSign  | false                 | Make value sign opposite by click or not  |
+|-------------|-----------------------|-------------------------------------------|
+| sensetivity | 1                     | Value from 0 to 1. Multiplied by scroll   |
+|-------------|-----------------------|-------------------------------------------|
+| capture     | true                  | Capture event for scroll window           |
+|-------------|-----------------------|-------------------------------------------|
+| eachSymbol  | false                 | Make every symbol change independently    |
+|-------------|-----------------------|-------------------------------------------|
+| hiddenInput | undefined             | Hidden input to collect values            |
+|-------------|-----------------------|-------------------------------------------|
+| * id        | no value              | ID attribute of hidden input              |
+|-------------|-----------------------|-------------------------------------------|
+| * name      | no value              | name attribute of hidden input            |
+|-------------|-----------------------|-------------------------------------------|
 
 </pre>
 

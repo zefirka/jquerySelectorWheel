@@ -3,7 +3,7 @@ $.fn.SelectorWheel = function(options) {
   var $container = this;
   var $spanblock;
 
-  var settings = $.extend( {
+  var settings = $.extend({
     'value' : $container.attr("value")===undefined ? 0 : parseInt($container.attr("value")),
     'symCount' : $container.attr("length")===undefined ? 3 : parseInt($container.attr("length")),
     'valueFrom'  : $container.attr("valueFrom")===undefined ? 0 : $container.attr("valueFrom"),
@@ -11,7 +11,11 @@ $.fn.SelectorWheel = function(options) {
     "changeSign" : false,
     "sensetivity" : 1,
     "capture" : true,
-    "eachSymbol" : false 
+    "eachSymbol" : false ,
+    "hiddenInput" : {
+      "enabled" : false
+    }
+
   }, options);
 
   var Private = {
@@ -51,6 +55,7 @@ $.fn.SelectorWheel = function(options) {
         }
         Private.setMask(Private.value);
       }
+      Private.hiddenInput.trigger({"type":"change","val":Private.value});
       console.log(Private.value)
     },
     viewCallback : function(event){
@@ -74,6 +79,7 @@ $.fn.SelectorWheel = function(options) {
         Private.setMask(Private.value);
       }
       Private.value *= Private.sign;
+      Private.hiddenInput.trigger({"type":"change","val":Private.value});
       console.log(Private.value) 
     },
     bindEvents: function(object, position){
@@ -110,6 +116,7 @@ $.fn.SelectorWheel = function(options) {
         Private.sign = -1;
         Private.value *= Private.sign;
       }
+      Private.hiddenInput.trigger({"type":"change","val":Private.value});
       console.log(Private.value)
     },
     setMask : function(x){
@@ -138,6 +145,13 @@ $.fn.SelectorWheel = function(options) {
         Private.graphics.shadowDown.css("width", $container.width()-1);
         Private.graphics.shadowUp.css("top", $container.position().top-8);
         Private.graphics.shadowDown.css("top", $container.position().top+34);
+    },
+    setHiddenInput : function(id, name){
+      $container.after("<input type='hidden' id='"+id+"' name='"+name+"' value='"+Private.value+"'>");
+      Private.hiddenInput = $container.next();
+      Private.hiddenInput.on("change", function(x){
+        Private.hiddenInput.attr("value", x.val);
+      })
     }
   }
   
@@ -166,6 +180,10 @@ $.fn.SelectorWheel = function(options) {
       $container.on("mouseScrolled", Private.separateViewCallback);
     }
     Private.drawLights("-down");
+
+    if(settings.hiddenInput.enabled){
+      Private.setHiddenInput(settings.hiddenInput.id, settings.hiddenInput.name);
+    }
   }
 
   
