@@ -43,6 +43,7 @@ $.fn.SelectorWheel = function(options) {
 
   var that = {
     value : settings.value, 
+    valueType : settings.type,
     alphabet : settings.alphabet,
     alphabetLength : settings.alphabet.length-2,
     sign : 1, //знак операции
@@ -85,27 +86,36 @@ $.fn.SelectorWheel = function(options) {
     viewEach : function(event){
 
       var result = Public.getNextValue(event.value, event.direction, that.alphabet);
-      //var result = ((parseInt(event.value) + event.direction) % 10) < 0 ? 10+((parseInt(event.value) + event.direction) % 10) : ((parseInt(event.value) + event.direction) % 10);
-      
       that.cells[event.position].value = Public.getValueFromLetter(result);
-      var t = 0;
-      for(var i=0,l=that.cells.length;i<l;i++){
-        t += Math.pow(that.alphabetLength,settings.symCount-i-1)*that.cells[i].value;
-      }
-      t *= that.sign;
-      if(t<=settings.valueTo && t>=settings.valueFrom){
-        that.value = Math.abs(t);
-        $(this).html(result);
-      }else{
-        if(t<=settings.valueTo && t<=settings.valueFrom){//нижняя граница
-          that.value = parseInt(settings.valueFrom);
-        }else
-        if(t>=settings.valueTo && t>=settings.valueFrom){//верхняя граница
-          that.value = parseInt(settings.valueTo);
+
+      if(that.valueType=='int'){
+        var t = 0;
+        for(var i=0,l=that.cells.length;i<l;i++){
+          t += Math.pow(that.alphabetLength,settings.symCount-i-1)*that.cells[i].value;
         }
-        that.setMask(that.value);
+        t *= that.sign;
+        if(t<=settings.valueTo && t>=settings.valueFrom){
+          that.value = Math.abs(t);
+          $(this).html(result);
+        }else{
+          if(t<=settings.valueTo && t<=settings.valueFrom){//нижняя граница
+            that.value = parseInt(settings.valueFrom);
+          }else
+          if(t>=settings.valueTo && t>=settings.valueFrom){//верхняя граница
+            that.value = parseInt(settings.valueTo);
+          }
+          that.setMask(that.value);
+        }
+        that.value *= that.sign;
+      }else{
+        var t;
+        for(var i=0,l=that.cells.length;i<l;i++){
+          t += that.cells[i].value.toString();
+        }
+        $(this).html(result);
+        that.value=t;
       }
-      that.value *= that.sign;
+
       that.hiddenInput.trigger({"type":"change","val":that.value});
       console.log(that.value) 
     },
@@ -170,6 +180,7 @@ $.fn.SelectorWheel = function(options) {
           alphabet+=i.toString(index);
         }
         alphabet+="]";
+        that.valueType = 'int';
         that.alphabet=alphabet;
         that.alphabetLength = alphabet.length-2,
         console.log(alphabet);
