@@ -11,76 +11,113 @@ $.fn.SelectorWheel = function(options) {
     "changeSign" : false,
     "sensetivity" : 1,
     "capture" : true,
-    "eachSymbol" : false ,
+    "eachSymbol" : true ,
+    "type" : "int-10", //наверное имеет смысл, только если eachSymbol повернут на true
+    "alphabet" : "[0123456789]", 
     "hiddenInput" : {
       "enabled" : false
     }
 
   }, options);
 
-  var Private = {
+
+  //Public methods to export out.  
+  var Public = {
+    getValueFromLetter : function(x){
+      return that.alphabet.indexOf(x)-1;
+    },
+    getNextValue : function(val, sum, alphabet){
+      var pos = alphabet.indexOf(val.toString());
+      var resultPos = (pos+sum) % (alphabet.length-2) < 1 ? (alphabet.length-2) + ((pos+sum) % (alphabet.length-2)) : (pos+sum) % (alphabet.length-2);
+      return alphabet.charAt(resultPos);
+
+    },
+    getPrivateProperty : function(x){
+      if(!(typeof that[x] == 'function')){
+        return that[x]
+      }else{
+        throw("Error: Requested property is that function. Access denied.")
+      }
+    }
+  }
+
+  var that = {
     value : settings.value, 
+    valueType : settings.type,
+    alphabet : settings.alphabet,
+    alphabetLength : settings.alphabet.length-2,
     sign : 1, //знак операции
-    graphics : {}, //пустой объект для графических элементов
     getSymbolDifference : function(){
-      return (settings.symCount - Private.value.toString().length);
+      return (settings.symCount - that.value.toString().length);
     },
     customSymbol : function(x){
-      var diff = Private.getSymbolDifference();
+      var diff = that.getSymbolDifference();
       x=x.toString(); 
       while(diff-- > 0){
         x = "0" + x;
       }
       return x;
-    },
+    },    
     redrawFull : function(value){ 
-      value = Private.customSymbol(value);
+      value = that.customSymbol(value);
 
       for(var i=0;i<settings.symCount;i++){
         symbol = value.charAt(i);      
         $($(".symbol", $container)[i]).html(symbol);
       }
     },
-    separateViewCallback : function(event){
-      var result = Private.value + event.direction/settings.sensetivity;
+    viewAll : function(event){
+      var result = that.value + event.direction/settings.sensetivity;
       if(result<=settings.valueTo && result>=settings.valueFrom){
-        Private.value = result;
-        Private.redrawFull(result);
+        that.value = result;
+        that.redrawFull(result);
       }else{
         if(result<=settings.valueTo && result<=settings.valueFrom){ //нижняя граница
-          Private.value = parseInt(settings.valueFrom);
+          that.value = parseInt(settings.valueFrom);
         }else
         if(result>=settings.valueTo && result>=settings.valueFrom){ //верхняя граница
-          Private.value = parseInt(settings.valueTo);
+          that.value = parseInt(settings.valueTo);
         }
-        Private.setMask(Private.value);
+        that.setMask(that.value);
       }
-      Private.hiddenInput.trigger({"type":"change","val":Private.value});
-      console.log(Private.value)
+      that.hiddenInput.trigger({"type":"change","val":that.value});
+      console.log(that.value)
     },
-    viewCallback : function(event){
-      var result = ((parseInt(event.value) + event.direction) % 10) < 0 ? 10+((parseInt(event.value) + event.direction) % 10) : ((parseInt(event.value) + event.direction) % 10);
-      Private.cells[event.position].value = result;
-      var t = 0;
-      for(var i=0,l=Private.cells.length;i<l;i++){
-        t += Math.pow(10,settings.symCount-i-1)*Private.cells[i].value;
-      }
-      t *= Private.sign;
-      if(t<=settings.valueTo && t>=settings.valueFrom){
-        Private.value = Math.abs(t);
-        $(this).html(result);
-      }else{
-        if(t<=settings.valueTo && t<=settings.valueFrom){//нижняя граница
-          Private.value = parseInt(settings.valueFrom);
-        }else
-        if(t>=settings.valueTo && t>=settings.valueFrom){//верхняя граница
-          Private.value = parseInt(settings.valueTo);
+    viewEach : function(event){
+
+      var result = Public.getNextValue(event.value, event.direction, that.alphabet);
+      that.cells[event.position].value = Public.getValueFromLetter(result);
+
+      if(that.valueType=='int'){
+        var t = 0;
+        for(var i=0,l=that.cells.length;i<l;i++){
+          t += Math.pow(that.alphabetLength,settings.symCount-i-1)*that.cells[i].value;
         }
-        Private.setMask(Private.value);
+        t *= that.sign;
+        if(t<=settings.valueTo && t>=settings.valueFrom){
+          that.value = Math.abs(t);
+          $(this).html(result);
+        }else{
+          if(t<=settings.valueTo && t<=settings.valueFrom){//нижняя граница
+            that.value = parseInt(settings.valueFrom);
+          }else
+          if(t>=settings.valueTo && t>=settings.valueFrom){//верхняя граница
+            that.value = parseInt(settings.valueTo);
+          }
+          that.setMask(that.value);
+        }
+        that.value *= that.sign;
+      }else{
+        var t;
+        for(var i=0,l=that.cells.length;i<l;i++){
+          t += that.cells[i].value.toString();
+        }
+        $(this).html(result);
+        that.value=t;
       }
-      Private.value *= Private.sign;
-      Private.hiddenInput.trigger({"type":"change","val":Private.value});
-      console.log(Private.value) 
+
+      that.hiddenInput.trigger({"type":"change","val":that.value});
+      console.log(that.value) 
     },
     bindEvents: function(object, position){
       object.on("mousewheel", function(scroll){
@@ -98,106 +135,133 @@ $.fn.SelectorWheel = function(options) {
          return 0;
       }
       if($(this).html()=="-"){
-        $(this).html(Private.stack);
-        Private.value *= Private.sign;
-        Private.sign = 1;        
-        if(Private.stack!=0){
-          Private.value += Private.stack*Math.pow(10,settings.symCount-1);
+        $(this).html(that.stack);
+        that.value *= that.sign;
+        that.sign = 1;        
+        if(that.stack!=0){
+          that.value += that.stack*Math.pow(10,settings.symCount-1);
         }
-        Private.cells[0].value=Private.stack;
+        that.cells[0].value=that.stack;
       }else{
         $(this).html("-");
-        Private.stack = Private.cells[0].value;
-        if(Private.cells[0].value!=0){
-          Private.value -= Private.cells[0].value*Math.pow(10,settings.symCount-1);
+        that.stack = that.cells[0].value;
+        if(that.cells[0].value!=0){
+          that.value -= that.cells[0].value*Math.pow(10,settings.symCount-1);
         }
-        Private.cells[0].value=0;
+        that.cells[0].value=0;
         
-        Private.sign = -1;
-        Private.value *= Private.sign;
+        that.sign = -1;
+        that.value *= that.sign;
       }
-      Private.hiddenInput.trigger({"type":"change","val":Private.value});
-      console.log(Private.value)
+      that.hiddenInput.trigger({"type":"change","val":that.value});
+      console.log(that.value)
     },
     setMask : function(x){
-      var drawUp = Private.customSymbol(x);
+      var drawUp = that.customSymbol(x);
 
       for(var i=0;i<settings.symCount;i++){
         $($(".symbol", $container)[i]).html(drawUp.charAt(i));
-        if(settings.eachSymbol){Private.cells[i].value=parseInt(drawUp.charAt(i))}
+        if(settings.eachSymbol){that.cells[i].value=parseInt(drawUp.charAt(i))}
       }
-    },
-    drawLights : function(key){
-      if(key=='-up'){
-        $container.append("<div class='shadow shadow-up'></div>");
-        Private.graphics.shadowUp = $(".shadow-up", $container);
-      }else 
-      if(key=='-down'){
-        $container.append("<div class='shadow shadow-down'></div>");
-        Private.graphics.shadowDown = $(".shadow-down", $container);
-      }else{
-        Private.positioning();
-        $(window).resize(Private.positioning);
-      }
-    },
-    positioning : function(){
-        Private.graphics.shadowUp.css("width", $container.width()-1);
-        Private.graphics.shadowDown.css("width", $container.width()-1);
-        Private.graphics.shadowUp.css("top", $container.position().top-8);
-        Private.graphics.shadowDown.css("top", $container.position().top+34);
     },
     setHiddenInput : function(id, name){
-      $container.after("<input type='hidden' id='"+id+"' name='"+name+"' value='"+Private.value+"'>");
-      Private.hiddenInput = $container.next();
-      Private.hiddenInput.on("change", function(x){
-        Private.hiddenInput.attr("value", x.val);
+      $container.after("<input type='hidden' id='"+id+"' name='"+name+"' value='"+that.value+"'>");
+      that.hiddenInput = $container.next();
+      that.hiddenInput.on("change", function(x){
+        that.hiddenInput.attr("value", x.val);
       })
+    },
+    configureAlphabet : function(){
+      var alphabet = "[";
+      if(settings.type.indexOf("int")==0){
+
+        var index = parseInt(settings.type.substr(-2));
+        for(var i=0;i<index;i++){
+          alphabet+=i.toString(index);
+        }
+        alphabet+="]";
+        that.valueType = 'int';
+        that.alphabet=alphabet;
+        that.alphabetLength = alphabet.length-2,
+        console.log(alphabet);
+      }
     }
   }
   
+  //все графические движняки
+  var visual = {
+    graphics : {},
+    drawShadow : function(key){
+      if(key=='-up'){
+        $container.append("<div class='shadow shadow-up'></div>");
+        visual.graphics.shadowUp = $(".shadow-up", $container);
+      }else 
+      if(key=='-down'){
+        $container.append("<div class='shadow shadow-down'></div>");
+        visual.graphics.shadowDown = $(".shadow-down", $container);
+      }else{
+        visual.positioning();
+        $(window).resize(visual.positioning);
+      }
+    },
+    positioning : function(){
+      visual.graphics.shadowUp.css("width", $container.width()-1);
+      visual.graphics.shadowDown.css("width", $container.width()-1);
+      visual.graphics.shadowUp.css("top", $container.position().top-8);
+      visual.graphics.shadowDown.css("top", $container.position().top+34);
+    },
+    prepare : function(){
+      visual.drawShadow("-up"); //отрисовываем тень сверзху
+      
+      $container.append("<div class='spanblock'></div>"); //добавляем элементы и отрисовываем нужное кол-во
+      $spanblock = $(".spanblock", $container); 
+      var drawUp = that.customSymbol(that.value);
+      for(var i=0;i<settings.symCount;i++){
+        $spanblock.append("<span class='symbol'>"+drawUp.charAt(i)+"</span>")
+      }
+
+      visual.drawShadow("-down"); //отрисовываем тень снизу
+      visual.drawShadow(); //прицепляем хэндлеры для resize()
+    }
+  }
+
 
   function init(){
-    Private.drawLights("-up");
-    $container.append("<div class='spanblock'></div>")
-    $spanblock = $(".spanblock", $container); 
-    var drawUp = Private.customSymbol(Private.value);
-
-    for(var i=0;i<settings.symCount;i++){
-      $spanblock.append("<span class='symbol'>"+drawUp.charAt(i)+"</span>")
-    }
-      
+    visual.prepare(); 
+    that.configureAlphabet();
+    
     if(settings.eachSymbol){ //если к каждому символу надо привязать события
       var position = 0;
-      Private.cells = [];
+      that.cells = [];
       $(".symbol", $container).each(function(){
-        Private.cells.push({object : $(this), value : $(this).html()}) //какая-то избыточная ерунда, хорошо бы избавиться от этого 
-        Private.bindEvents($(this), position++);
-        $(this).on("mouseScrolled", Private.viewCallback);       
+        that.cells.push({object : $(this), value : $(this).html()}) //какая-то избыточная ерунда, хорошо бы избавиться от этого 
+        that.bindEvents($(this), position++);
+        $(this).on("mouseScrolled", that.viewEach);       
       })
-      var rechanger = settings.changeSign ? Private.cells[0].object.on("click", Private.changeToMinus) : undefined;
-    }else{ //а это если к контейнеру
-      Private.bindEvents($container);
-      $container.on("mouseScrolled", Private.separateViewCallback);
+      var rechanger = settings.changeSign ? that.cells[0].object.on("click", that.changeToMinus) : undefined;
+    }else{ //а это если к контейнеру целиком, что можно пока только для десятичных целых чисел
+      if(settings.type=='int-10'){
+        that.bindEvents($container);
+        $container.on("mouseScrolled", that.viewAll);
+      }else{
+        throw("Error: You can't use type='"+settings.type+"' with property eachSymbol='false'\n");
+      }
     }
-    Private.drawLights("-down");
 
+    //подкючает hidden input
     if(settings.hiddenInput.enabled){
-      Private.setHiddenInput(settings.hiddenInput.id, settings.hiddenInput.name);
+      that.setHiddenInput(settings.hiddenInput.id, settings.hiddenInput.name);
     }
   }
 
   
   init();
   
-  Private.drawLights();  
+  
 
-  //надобно ли вводить этот метод в жквери объект?
-  this.getProperty = function(x){
-    if(!(typeof Private[x] == 'function')){
-      return Private[x]
-    }else{
-      throw("Error: Requested property is private function. Access denied.")
-    }
+  //так или сразу пихать паблик. И вообще нужно ли это?
+  for(var e in Public){
+    this[e] = Public[e];
   }
 
   return this;
