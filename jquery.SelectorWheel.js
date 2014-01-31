@@ -12,7 +12,7 @@ $.fn.SelectorWheel = function(options) {
     "sensetivity" : 1,
     "capture" : true,
     "eachSymbol" : true ,
-    "type" : "int-10", //наверное имеет смысл, только если eachSymbol повернут на true
+    "type" : "int-16", //наверное имеет смысл, только если eachSymbol повернут на true
     "alphabet" : "[0123456789]", 
     "hiddenInput" : {
       "enabled" : false
@@ -24,15 +24,8 @@ $.fn.SelectorWheel = function(options) {
 
 
   var Public = {
-    toType : function(type, value){
-      switch(type){
-        case 'int':
-        return parseInt(value); 
-        break;
-        case 'string':
-        return value.toString();
-        break;
-      }
+    getValueFromLetter : function(x){
+      return that.alphabet.indexOf(x)-1;
     },
     getNextValue : function(val, sum, alphabet){
       var pos = alphabet.indexOf(val.toString());
@@ -52,6 +45,8 @@ $.fn.SelectorWheel = function(options) {
 
   var that = {
     value : settings.value, 
+    alphabet : settings.alphabet,
+    alphabetLength : settings.alphabet.length-2,
     sign : 1, //знак операции
     graphics : {}, //пустой объект для графических элементов
     getSymbolDifference : function(){
@@ -92,13 +87,13 @@ $.fn.SelectorWheel = function(options) {
     },
     viewEach : function(event){
 
-      var result = Public.getNextValue(event.value, event.direction, settings.alphabet)
+      var result = Public.getNextValue(event.value, event.direction, that.alphabet);
       //var result = ((parseInt(event.value) + event.direction) % 10) < 0 ? 10+((parseInt(event.value) + event.direction) % 10) : ((parseInt(event.value) + event.direction) % 10);
       
-      that.cells[event.position].value = result;
+      that.cells[event.position].value = Public.getValueFromLetter(result);
       var t = 0;
       for(var i=0,l=that.cells.length;i<l;i++){
-        t += Math.pow(10,settings.symCount-i-1)*that.cells[i].value;
+        t += Math.pow(that.alphabetLength,settings.symCount-i-1)*that.cells[i].value;
       }
       t *= that.sign;
       if(t<=settings.valueTo && t>=settings.valueFrom){
@@ -197,7 +192,8 @@ $.fn.SelectorWheel = function(options) {
           alphabet+=i.toString(index);
         }
         alphabet+="]";
-        settings.alphabet=alphabet;
+        that.alphabet=alphabet;
+        that.alphabetLength = alphabet.length-2,
         console.log(alphabet);
       }
     }
