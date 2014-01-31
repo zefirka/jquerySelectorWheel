@@ -52,6 +52,9 @@ Attributes <code>length</code>, <code>value</code>, <code>valueFrom</code>, <cod
 
 </pre>
 
+**Hidden input settings**
+If you want use hidden input to collect...
+
 **Listening for events**
 
 1. wheel
