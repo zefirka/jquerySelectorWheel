@@ -20,16 +20,16 @@ Including files into DOM:<br>
 	&lt;/script&gt;	
 </pre>
 
-Attributes <code>length</code>, <code>value</code>, <code>valueFrom</code>, <code>valueTo</code>  is not required;
+Attributes <code>length</code>, <code>value</code>, <code>valueFrom</code>, <code>valueTo</code>  is not required; You can set up these in settings json.
 
 **Settings JSON**
 <pre>
 |=============|=======================|===========================================|
 |  PROPERTY   |  STD VALUE            |      DESCRIPTION                          |
 |=============|=======================|===========================================| 
-|  value      | 'value' attr or 0     | Initial value of controller               |
+| value       | 'value' attr or 0     | Initial value of controller               |
 |-------------|-----------------------|-------------------------------------------|
-|  symCount   | 'length' attr or 3    | Count of symbol cells                     |
+| symCount    | 'length' attr or 3    | Count of symbol cells                     |
 |-------------|-----------------------|-------------------------------------------|
 | valueFrom   | 'valueFrom' attr or 0 | Minimal value of controller               |
 |-------------|-----------------------|-------------------------------------------|
@@ -41,7 +41,7 @@ Attributes <code>length</code>, <code>value</code>, <code>valueFrom</code>, <cod
 |-------------|-----------------------|-------------------------------------------|
 | capture     | true                  | Capture event for scroll window           |
 |-------------|-----------------------|-------------------------------------------|
-| eachSymbol  | false                 | Make every symbol change independently    |
+| eachSymbol  | true                  | Make every symbol change independently    |
 |-------------|-----------------------|-------------------------------------------|
 </pre>
 
@@ -62,8 +62,8 @@ If you want use hidden input to collect value of wheel selector control - switch
 **Custom alphabet**
 To customize alphabet and symbol order use next two properties in **settings.json**:
 
-1. <code>type</code>  - Sets input value data type. By default type is <code>'int-10'</code>, where last 2 digit says about type value's base. 10 is decimal, 16 is hexadecimal etc. You can use all 2 digital bases from 10 to 99. (Issue: wtf, why? If I want oct or binar? Need to be fixed). Also you can use type <code>'string'</code>. (Current version: available only integer types for 2-digital value base).
-2. <code>alphabet</code> - Sets alphabet's order and symbols. For 'int-16' alphabet is '[0132456789abcdef]'. For string type - sets order. For integer types calculates automaticaly.
+1. <code>type</code>  - Sets input value data type. By default type is <code>'int-10'</code>, where last 2 digit says about value's base. 10 is decimal, 16 is hexadecimal etc. You can use all 2 digital bases from 02 (binar) to 36. Also you can use type <code>'string'</code>. If you use string valut type that means that you cant switch option eachSymbol to false. And you must set up your custom alphabet for string.
+2. <code>alphabet</code> - Sets alphabet's order and symbols. For example for 'int-16' type, alphabet is '0132456789abcdef'. For integer types alphabet calculates automaticaly. For string type - alphabet sets up by designer.
 
 **Listening for events**
 
@@ -73,6 +73,9 @@ To customize alphabet and symbol order use next two properties in **settings.jso
 4. MozMousePixelScroll
 
 1 per 40 px scroll.
+
+##Lightweight version##
+There is available light weight version of plugin 2.5 KB - minimized, that equivalent for regular version of plugin with options : <code>eachSymbol = true, type = 'int-10', changeSign = false</code><br>
 
 ##Development##
 bower files unpacking into bower_components directory; Dependencies is: **jQuery** and **jQuery.mousecheel**.
