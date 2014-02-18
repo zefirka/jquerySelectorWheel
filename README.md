@@ -1,7 +1,7 @@
 #jqSelectorWheel : jQuery Plugin#
 
-jqSelectorWheel is a simple jQuery plugin which provides behavior of wheel symbol selector. <a href="http://zefirka.github.io/jquerySelectorWheel">Homepage</a>
-Plugin uses <a href="https://github.com/brandonaaron/jquery-mousewheel">jqeury-mousewheel</a>;
+jqSelectorWheel is a simple jQuery plugin which provides behavior of wheel symbol selector. <a href="http://zefirka.github.io/jquerySelectorWheel">Homepage</a><br>
+Plugin uses <a href="https://github.com/brandonaaron/jquery-mousewheel">jqeury-mousewheel</a>
 
 ##Usage##
 Including files into DOM:<br>
