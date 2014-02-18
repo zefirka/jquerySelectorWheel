@@ -6,36 +6,58 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="jquery.SelectorWheel : Simple jQuery wheel selector plugin." />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/main.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="plugin/jqSelectorWheel.css">
 
-    <title>jquery.SelectorWheel</title>
+    <script type="text/javascript" src='plugin/jquery/jquery.min.js'></script>
+    <script type="text/javascript" src='plugin/jquery-mousewheel/jquery.mousewheel.js'></script>
+    <script type="text/javascript" src='plugin/jquery.SelectorWheel.min.js'></script>
+
+    <script type="text/javascript" src='javascripts/main.js'></script>
+
+    <title>SelectorWheel jQuery plugin</title>
   </head>
 
   <body>
 
+    
+
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
-          <a id="forkme_banner" href="https://github.com/zefirka/jquerySelectorWheel">View on GitHub</a>
-
-          <h1 id="project_title">jquery.SelectorWheel</h1>
+          <h1 id="project_title">jqSelectorWheel</h1>
           <h2 id="project_tagline">Simple jQuery wheel selector plugin.</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/zefirka/jquerySelectorWheel/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/zefirka/jquerySelectorWheel/tarball/master">Download this project as a tar.gz file</a>
-            </section>
         </header>
+        <nav id='navigation'>
+          <ul>
+            <li><a href='#description'>Description</a></li>
+            <li><a href='#usage'>Usage</a></li>
+            <li><a href='#settings'>Settings</a></li>
+            <li><a href='#development'>Development</a></li>
+            <li><a href='#download'>Download</a></li>
+            <li><a href='https://github.com/zefirka/jquerySelectorWheel'>View on GitHub</a></li>
+          </ul>
+        </nav>
     </div>
 
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
+      <div class='push-up'></div>
       <section id="main_content" class="inner">
-        <h1>
-<a name="selector-wheel--jquery-plugin" class="anchor" href="#selector-wheel--jquery-plugin"><span class="octicon octicon-link"></span></a>Selector Wheel : jQuery Plugin</h1>
+        <h1><a name="selector-wheel--jquery-plugin" class="anchor" href="#selector-wheel--jquery-plugin"><span class="octicon octicon-link"></span></a>Selector Wheel : jQuery Plugin</h1>
+    
+    <h2>
+      <a class="anchor" href="#description" name="description"><span class="octicon octicon-link"></span></a>Description
+    </h2>
 
-<h2>
-<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+    <p><strong>jqSelectorWheel</strong> is a simple jQuery plugin that provides behavior of wheel symbol selector.</p>
+    <span class='example'>Example:</span><div id='myPrettyID' class='SelectorWheel' length='3' valueTo='999' valueFrom='000' value="365" ></div>
+
+
+    <h2>
+      <a class="anchor" href="#usage" name='usage'><span class="octicon octicon-link"></span></a>Usage
+    </h2>
+
 
 <p>Including files into DOM:<br></p>
 
@@ -57,9 +79,9 @@
     &lt;/script&gt; 
 </pre>
 
-<p>Attributes <code>length</code>, <code>value</code>, <code>valueFrom</code>, <code>valueTo</code>  is not required; You can set up these in settings json.</p>
 
-<p><strong>Settings JSON</strong></p>
+
+
 
 <pre>
 |=============|=======================|===========================================|
@@ -115,13 +137,17 @@ To customize alphabet and symbol order use next two properties in <strong>settin
 <li>MozMousePixelScroll</li>
 </ol><p>1 per 40 px scroll.</p>
 
-<h2>
-<a name="lightweight-version" class="anchor" href="#lightweight-version"><span class="octicon octicon-link"></span></a>Lightweight version</h2>
+<h2><a name="lightweight-version" class="anchor" href="#lightweight-version"><span class="octicon octicon-link"></span></a>Lightweight version</h2>
 
 <p>There is available light weight version of plugin 2.5 KB - minimized, that equivalent for regular version of plugin with options : <code>eachSymbol = true, type = 'int-10', changeSign = false</code><br></p>
 
-<h2>
-<a name="development" class="anchor" href="#development"><span class="octicon octicon-link"></span></a>Development</h2>
+<h2><a name="download" class="anchor" href="#download"><span class="octicon octicon-link"></span></a>Download</h2>
+<section id="downloads">
+  <a class="zip_download_link" href="https://github.com/zefirka/jquerySelectorWheel/zipball/master">Download this project as a .zip file</a>
+  <a class="tar_download_link" href="https://github.com/zefirka/jquerySelectorWheel/tarball/master">Download this project as a tar.gz file</a>
+</section>
+
+<h2><a name="development" class="anchor" href="#development"><span class="octicon octicon-link"></span></a>Development</h2>
 
 <p>bower files unpacking into bower_components directory; Dependencies is: <strong>jQuery</strong> and <strong>jQuery.mousecheel</strong>.</p>
 
