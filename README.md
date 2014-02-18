@@ -1,11 +1,13 @@
 #jqSelectorWheel : jQuery Plugin#
 
 jqSelectorWheel is a simple jQuery plugin which provides behavior of wheel symbol selector. <a href="http://zefirka.github.io/jquerySelectorWheel">Homepage</a>
+Plugin uses <a href="https://github.com/brandonaaron/jquery-mousewheel">jqeury-mousewheel</a>;
 
 ##Usage##
 Including files into DOM:<br>
 <pre>
-	&lt;script src="jquery.SelectorWheel.js"&gt;&lt;/script&gt;
+	&lt;script src="jquery.mousewheel.js"&gt;&lt;/script&gt;
+	&lt;script src="jquery.jqSelectorWheel.js"&gt;&lt;/script&gt;
 	&lt;link rel="stylesheet" type="text/css" href="jqSelectorWheel.css"&gt;
 </pre>
 How to attach plugin to element:<br>
@@ -77,11 +79,15 @@ To customize alphabet and symbol order use next two properties in **settings.jso
 1 per 40 px scroll.
 
 ##Lightweight version##
-There is available light weight version of plugin 2.5 KB - minimized, that equivalent for regular version of plugin with options : <code>eachSymbol: true</code>, <code>type: 'int-10'</code>, <code>changeSign: false</code>, <code>scrollBlock: true </code><br>
+There is available light weight version of plugin 2.5 KB - minimized, that equivalent for regular version of plugin with options : <code>eachSymbol: true</code>, <code>type: 'int-10'</code>, <code>changeSign: false</code>, <code>scrollBlock: true </code>. This version is in directory <code>lightweight-version</code><br> 
+
+##Version with included jquery.MouseWheel##
+Version where jquery.mousewheel has already included is in directory <code>mousewheel-version</code>. In this version you have no need to include jquery.mousewheel plugin into you HTML file.
 
 ##Development##
 bower files unpacking into bower_components directory; Dependencies is: **jQuery** and **jQuery.mousecheel**.
 
 1. Installing components with **bower** for development: <code>bower instal</code> <br>
 2. Updating css with **LESSC**: <code>lessc dev/main.less &gt; jqSelectorWheel.css</code><br>
-3. Including plugins and packages: <code>&lt;script src="/bower_components/jquery/index.js"&gt;</script></code><br>
+3. Updating minified versions : <code>sh update.sh</code>
+4. Including plugins and packages: <code>&lt;script src="/bower_components/jquery/index.js"&gt;</script></code><br>
