@@ -1,10 +1,10 @@
 (function($) {
-  $.fn.SelectorWheel = function(options) {
+  $.fn.jqSelectorWheel = function(options) {
     var $container = this, that;
     
     var settings = $.extend({
       'value' : $container.attr("value")===undefined ? 0 : parseInt($container.attr("value")),
-      'symCount' : $container.attr("length")===undefined ? 3 : parseInt($container.attr("length")),
+      'valueLength' : $container.attr("length")===undefined ? 3 : parseInt($container.attr("length")),
       'valueFrom'  : $container.attr("valueFrom")===undefined ? 0 : $container.attr("valueFrom"),
       'valueTo'  : $container.attr("valueTo")===undefined ? 999 : $container.attr("valueTo"),
       "capture" : true,
@@ -24,7 +24,7 @@
     this.value = settings.value;
     
     that.customSymbol = function(x){
-      var diff = settings.symCount - $container.value.toString().length;
+      var diff = settings.valueLength - $container.value.toString().length;
       x=x.toString(); 
       while(diff-- > 0){
         x = "0" + x;
@@ -34,7 +34,7 @@
     
     that.setMask = function(x){
       var drawUp = that.customSymbol(parseInt(x));
-      for(var i=0;i<settings.symCount;i++){
+      for(var i=0;i<settings.valueLength;i++){
         $($(".symbol", $container)[i]).html(drawUp.charAt(i));
         $container.cells[i]=parseInt(drawUp.charAt(i));
       }
@@ -61,7 +61,7 @@
       $container.cells[position-1] = currentSymbol;      
       
       for(var i=0,l=$container.cells.length;i<l;i++)
-        full += Math.pow(10,settings.symCount-i-1)*$container.cells[i];
+        full += Math.pow(10,settings.valueLength-i-1)*$container.cells[i];
       
       if(full<=max && full>=min){
         $container.value = full;
@@ -102,7 +102,7 @@
         $container.append("<div class='spanblock'></div>"); //добавляем элементы и отрисовываем нужное кол-во
         var $spanblock = $(".spanblock", $container); 
         var drawUp = that.customSymbol($container.value);
-        for(var i=0;i<settings.symCount;i++)
+        for(var i=0;i<settings.valueLength;i++)
           $spanblock.append("<span class='symbol'>"+drawUp.charAt(i)+"</span>")
 
         visual.drawShadow("-down"); //отрисовываем тень снизу

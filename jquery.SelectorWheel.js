@@ -1,15 +1,15 @@
 (function($) {
-  $.fn.SelectorWheel = function(options) {
+  $.fn.jqSelectorWheel = function(options) {
     var $container = this;
     
     var settings = $.extend({
       'value' : $container.attr("value")===undefined ? 0 : parseInt($container.attr("value")),
-      'symCount' : $container.attr("length")===undefined ? 3 : parseInt($container.attr("length")),
+      'valueLength' : $container.attr("length")===undefined ? 3 : parseInt($container.attr("length")),
       'valueFrom'  : $container.attr("valueFrom")===undefined ? 0 : $container.attr("valueFrom"),
       'valueTo'  : $container.attr("valueTo")===undefined ? 999 : $container.attr("valueTo"),
       "changeSign" : false,
       "sensetivity" : 1,
-      "capture" : true,
+      "scrollBlock" : true,
       "eachSymbol" : true ,
       "type" : "int-10",
       "alphabet" : "0123456789", 
@@ -34,7 +34,7 @@
     };
 
     this.optionsCheck = function(){
-      if(settings.value.length > settings.symCount)
+      if(settings.value.length > settings.valueLength)
         throw("Error: Initial value's symbol lenght is more than symbols count");
       
       if(settings.eachSymbol){
@@ -59,7 +59,7 @@
       base : settings.alphabet.length,
       sign : 1 }
 
-    that.getSymbolDifference = function(base){return (settings.symCount - that.value.toString(base).length)}
+    that.getSymbolDifference = function(base){return (settings.valueLength - that.value.toString(base).length)}
     that.customSymbol = function(x){
       var diff = that.getSymbolDifference(that.base);
       x=x.toString(that.base); 
@@ -73,12 +73,12 @@
         $(this).html(that.stack);
         that.value *= that.sign;
         if(that.stack!=0)
-           that.value += that.stack*Math.pow(that.base,settings.symCount-1);
+           that.value += that.stack*Math.pow(that.base,settings.valueLength-1);
       }else{
         $(this).html("-");
         that.stack = parseInt($container.cells[0]);
         if(that.stack)
-           that.value -= that.stack*Math.pow(that.base,settings.symCount-1);
+           that.value -= that.stack*Math.pow(that.base,settings.valueLength-1);
         $container.cells[0] = 0;
       }
     
@@ -90,7 +90,7 @@
     
     that.setMask = function(x){
       var drawUp = that.customSymbol(parseInt(x, that.base));
-      for(var i=0;i<settings.symCount;i++){
+      for(var i=0;i<settings.valueLength;i++){
         $($(".symbol", $container)[i]).html(drawUp.charAt(i));
         if(settings.eachSymbol){
           $container.cells[i]=parseInt(drawUp.charAt(i));
@@ -105,6 +105,17 @@
         that.hiddenInput.attr("value", x.val);
       })
     }
+    
+    that.setScrollBlock = function(){
+      $('body').on({
+        'mousewheel': function(e) {
+          if(e.target.parentNode.parentNode.id == $container[0].id){
+            e.preventDefault();
+            e.stopPropagation();
+          }
+      }});
+    }
+
     that.configure = function(){
       var alphabet = '';
       if(settings.type.indexOf("int")==0){
@@ -117,7 +128,6 @@
         that.base = that.alphabet.length;
         that.min = parseInt(settings.valueFrom, that.base);
         that.max = parseInt(settings.valueTo, that.base)
-        console.log(alphabet);
       }else{
         that.alphabet = settings.alphabet;
         if(settings.type!=='string')
@@ -137,7 +147,7 @@
       $container.cells[position-1] = $container.getValueFromLetter(currentSymbol,that.alphabet);      
       
       for(var i=0,l=$container.cells.length;i<l;i++)
-        full += Math.pow(that.base,settings.symCount-i-1)*$container.cells[i];
+        full += Math.pow(that.base,settings.valueLength-i-1)*$container.cells[i];
       
       full *= that.sign;
       
@@ -163,8 +173,7 @@
       }
       that.setMask(that.value.toString(that.base));
       var hidden = settings.hiddenInput.enabled ? that.hiddenInput.trigger({"type":"change","val":that.value}) : null;  
-    }
-    
+    }    
     
     that.scrollNextLetter = function(cell, direction){
       var currentLetter = cell.html();
@@ -205,7 +214,7 @@
         $container.append("<div class='spanblock'></div>"); //добавляем элементы и отрисовываем нужное кол-во
         var $spanblock = $(".spanblock", $container); 
         var drawUp = that.customSymbol(that.value);
-        for(var i=0;i<settings.symCount;i++)
+        for(var i=0;i<settings.valueLength;i++)
           $spanblock.append("<span class='symbol'>"+drawUp.charAt(i)+"</span>")
 
         visual.drawShadow("-down"); //отрисовываем тень снизу
@@ -238,10 +247,12 @@
       }else{ // if all container is active
         $container.on("mousewheel", that.scrollAll);     
       }
+
+      var scollBlock = settings.scrollBlock ? that.setScrollBlock() : null;
       var hiddenInput = settings.hiddenInput.enabled ? that.setHiddenInput(settings.hiddenInput.id, settings.hiddenInput.name) : null      
     }
 
     init();
     return this;
   };
-})(jQuery);     
+})(jQuery);  

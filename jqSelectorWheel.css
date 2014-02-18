@@ -1,4 +1,4 @@
-.SelectorWheel {
+.jqSelectorWheel {
   display: inline-block;
   height: 26px;
   padding: 2px;
@@ -11,7 +11,7 @@
   border-radius: 5px;
   z-index: 4;
 }
-.SelectorWheel .symbol {
+.jqSelectorWheel .symbol {
   height: 18px;
   background: #eee;
   font-family: Arial, sans-serif;
@@ -29,10 +29,10 @@
   box-shadow: 3px -1px 2px 0px rgba(0, 0, 0, 0.85);
   z-index: 5;
 }
-.SelectorWheel .spanblock {
+.jqSelectorWheel .spanblock {
   white-space: nowrap;
 }
-.SelectorWheel .shadow {
+.jqSelectorWheel .shadow {
   width: 80px;
   height: 5px;
   display: inline-block;
@@ -40,13 +40,13 @@
   content: "";
   z-index: 6;
 }
-.SelectorWheel .shadow-up {
+.jqSelectorWheel .shadow-up {
   -webkit-box-shadow: 0px 10px 5px 0px rgba(22, 33, 50, 0.47);
   -moz-box-shadow: 0px 10px 5px 0px rgba(22, 33, 50, 0.47);
   box-shadow: 0px 10px 5px 0px rgba(22, 33, 50, 0.47);
   top: 0px;
 }
-.SelectorWheel .shadow-down {
+.jqSelectorWheel .shadow-down {
   -webkit-box-shadow: 0px -10px 5px 0px rgba(22, 33, 50, 0.47);
   -moz-box-shadow: 0px -10px 5px 0px rgba(22, 33, 50, 0.47);
   box-shadow: 0px -10px 5px 0px rgba(22, 33, 50, 0.47);

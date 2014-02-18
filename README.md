@@ -1,20 +1,22 @@
-#Selector Wheel : jQuery Plugin#
+#jqSelectorWheel : jQuery Plugin#
+
+jqSelectorWheel is a simple jQuery plugin which provides behavior of wheel symbol selector. <a href="http://zefirka.github.io/jquerySelectorWheel">Homepage</a>
 
 ##Usage##
-
 Including files into DOM:<br>
 <pre>
 	&lt;script src="jquery.SelectorWheel.js"&gt;&lt;/script&gt;
 	&lt;link rel="stylesheet" type="text/css" href="jqSelectorWheel.css"&gt;
 </pre>
+How to attach plugin to element:<br>
 <pre>
-	&lt;div id='myPrettyID' class='SelectorWheel' 
+	&lt;div id='myPrettyID' class='jqSelectorWheel' 
 							length='4' 
 							valueTo='8888' 
 							valueFrom='0' 
 							value="666&gt;&lt;/div&gt;
 	&lt;script&gt; 
-		var jqSelectorWheel = $("#myPrettyID").SelectorWheel({
+		var jqSelectorWheel = $("#myPrettyID").jqSelectorWheel({
 			//settings JSON
 		});
 	&lt;/script&gt;	
@@ -29,7 +31,7 @@ Attributes <code>length</code>, <code>value</code>, <code>valueFrom</code>, <cod
 |=============|=======================|===========================================| 
 | value       | 'value' attr or 0     | Initial value of controller               |
 |-------------|-----------------------|-------------------------------------------|
-| symCount    | 'length' attr or 3    | Count of symbol cells                     |
+| valueLength | 'length' attr or 3    | Count of symbol cells                     |
 |-------------|-----------------------|-------------------------------------------|
 | valueFrom   | 'valueFrom' attr or 0 | Minimal value of controller               |
 |-------------|-----------------------|-------------------------------------------|
@@ -39,7 +41,7 @@ Attributes <code>length</code>, <code>value</code>, <code>valueFrom</code>, <cod
 |-------------|-----------------------|-------------------------------------------|
 | sensetivity | 1                     | Value from 0 to 1. Multiplied by scroll   |
 |-------------|-----------------------|-------------------------------------------|
-| capture     | true                  | Capture event for scroll window           |
+| scrollBlock | true                  | Prevents event for scroll window          |
 |-------------|-----------------------|-------------------------------------------|
 | eachSymbol  | true                  | Make every symbol change independently    |
 |-------------|-----------------------|-------------------------------------------|
