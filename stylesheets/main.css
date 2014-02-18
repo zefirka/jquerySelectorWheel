@@ -512,7 +512,6 @@ pre,
 code {
   width: 100%;
   color: #222;
-  background-color: #fff;
   font-family: Monaco, "Bitstream Vera Sans Mono", "Lucida Console", Terminal, monospace;
   font-size: 14px;
   border-radius: 2px;
@@ -521,17 +520,19 @@ code {
 }
 pre {
   width: 100%;
-  /*padding: 10px;*/
-
+  background-color: #ffffff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   overflow: auto;
 }
 code {
   padding: 3px;
+  border-radius: 5px;
+  background-color: #B8DAE1;
   margin: 0 3px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 pre code {
+  background-color: #FFFFFF !important;
   display: block;
   box-shadow: none;
 }
@@ -668,9 +669,9 @@ Full-Width Styles
   background: url(../images/sprite_download.png) no-repeat top right;
 }
 #main_content_wrap {
-  background: #f2f2f2;
-  border-top: 1px solid #111;
-  border-bottom: 1px solid #111;
+  background: #F7FAFF;
+  border-top: 6px solid #9897E6;
+  border-bottom: 6px solid #9897E6;
 }
 #footer_wrap {
   background: #0E3639;
@@ -949,8 +950,6 @@ table th[class*="col-"] {
 #header_wrap {
   display: inline-block;
   width: 100%;
-  position: fixed;
-  top: 0px;
   z-index: 25;
 }
 #main_content_wrap,
@@ -963,6 +962,8 @@ h2 {
 }
 nav {
   background-color: #507b94;
+  z-index: 25;
+  width: 100%;
   -webkit-transition: box-shadow 200ms ease-out 100ms;
   -moz-transition: box-shadow 200ms ease-out 100ms;
   -o-transition: box-shadow 200ms ease-out 100ms;
@@ -989,7 +990,22 @@ nav ul li a {
   margin-bottom: 20px;
   display: inline-block;
 }
-.sticky {
+.gcont {
+  position: relative;
+  left: 8px;
+  top: -5px;
+}
+.ghico {
+  display: inline-block;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: url('../images/blacktocat.png') no-repeat 95% 50%;
+  font-weight: 700;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+.is-sticky nav {
   -webkit-box-shadow: 0px 4px 4px 4px rgba(50, 50, 50, 0.75);
   -moz-box-shadow: 0px 4px 4px 4px rgba(50, 50, 50, 0.75);
   box-shadow: 0px 4px 4px 4px rgba(50, 50, 50, 0.75);
@@ -1020,4 +1036,10 @@ nav ul li a {
   .push-up {
     height: 438px;
   }
+}
+table {
+  text-align: center;
+}
+table th {
+  text-align: center;
 }

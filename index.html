@@ -15,7 +15,7 @@
 
     <script type="text/javascript" src='javascripts/main.js'></script>
 
-    <title>SelectorWheel jQuery plugin</title>
+    <title>jqSelectorWheel jQuery plugin</title>
   </head>
 
   <body>
@@ -33,16 +33,15 @@
             <li><a href='#description'>Description</a></li>
             <li><a href='#usage'>Usage</a></li>
             <li><a href='#settings'>Settings</a></li>
-            <li><a href='#development'>Development</a></li>
             <li><a href='#download'>Download</a></li>
-            <li><a href='https://github.com/zefirka/jquerySelectorWheel'>View on GitHub</a></li>
+            <li><a href='#development'>Development</a></li>
+            <li><a href='https://github.com/zefirka/jquerySelectorWheel'>View on GitHub <span class='gcont'><i class='ghico'></i></span></a></li>
           </ul>
         </nav>
     </div>
 
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
-      <div class='push-up'></div>
       <section id="main_content" class="inner">
         <h1><a name="selector-wheel--jquery-plugin" class="anchor" href="#selector-wheel--jquery-plugin"><span class="octicon octicon-link"></span></a>Selector Wheel : jQuery Plugin</h1>
     
@@ -51,7 +50,7 @@
     </h2>
 
     <p><strong>jqSelectorWheel</strong> is a simple jQuery plugin that provides behavior of wheel symbol selector.</p>
-    <span class='example'>Example:</span><div id='myPrettyID' class='SelectorWheel' length='3' valueTo='999' valueFrom='000' value="365" ></div>
+    <span class='example'>Example:</span><div id='myPrettyID1' class='jqSelectorWheel' length='3' valueTo='999' valueFrom='000' value="365" ></div>
 
     <h2>
       <a class="anchor" href="#usage" name='usage'><span class="octicon octicon-link"></span></a>Usage
@@ -60,6 +59,7 @@
     <p>Including files into DOM:</p>
 
     <pre>
+
         &lt;script src="jquery.SelectorWheel.js"&gt;&lt;/script&gt;
         &lt;link rel="stylesheet" type="text/css" href="jqSelectorWheel.css"&gt;
     </pre>
@@ -67,22 +67,32 @@
     <p>How to use plugin:</p>
 
     <pre>
-        &lt;div id='myPrettyID' class='SelectorWheel' 
-                                length='4' 
-                                valueTo='8888' 
-                                valueFrom='0' 
-                                value="666&gt;&lt;/div&gt;
+
+        &lt;div id='myPrettyID2' class='jqSelectorWheel' 
+                                length='5' 
+                                valueTo='90000' 
+                                valueFrom='1' 
+                                value="221&gt;&lt;/div&gt;
         &lt;script&gt; 
             var jqSelectorWheel = $("#myPrettyID").SelectorWheel({
-                //settings JSON
+                {"hiddenInput" : {
+                  "enabled":true, 
+                  "id" : "hiddenInputID", 
+                  "name" : "hiddenInputNAME"}}
             });
         &lt;/script&gt; 
     </pre>
 
+    <br>
+    <div style="text-align:center;">
+      <div id='myPrettyID2' class='jqSelectorWheel' length='5' valueTo='90000' valueFrom='1' value="221" ></div>
+    </div>
 
     <h2>
       <a class="anchor" href="#settings" name='settings'><span class="octicon octicon-link"></span></a>Settings
     </h2>
+
+    <h4>JSON</h4>
 
     <table class='table table-bordered table-condensed'>
       <thead>
@@ -133,11 +143,21 @@
           <td>true</td>
           <td>Make every symbol change independently</td>
         </tr>
+        <tr>
+          <td>type</td>
+          <td>'int-10'</td>
+          <td>Type of value</td>
+        </tr>
+        <tr>
+          <td>alphabet</td>
+          <td>"0123456789"</td>
+          <td>Order of alphabet symbols</td>
+        </tr>
       </tbody>
     </table>
 
     <h4>Hidden input</h4>
-    <p>If you want use hidden input to collect value of wheel selector control - switch hiddenInput.enabled value to true and set up hiddenInput.id and hiddenInput.name for your input. Value of input will update automaticaly. </p>
+    <p>If you want use hidden input to collect value of wheel selector control - switch <code>hiddenInput.enabled</code> value to true and set up <code>hiddenInput.id</code> and <code>hiddenInput.name</code> for your input. Value of input will update automaticaly. </p>
 
     <table class='table table-bordered table-condensed'>
       <tbody>
@@ -166,19 +186,18 @@
 
 
     <h4>Custom alphabet</h4>
-    <p>To customize alphabet and symbol order use next two properties in <strong>settings.json</strong>:</p>
+    <p>You also can use custom symbol alphabet. To customize alphabet and symbol order use next two properties in <strong>settings.json</strong>:</p>
 
     <ol>
       <li>
-        <code>type</code>  - Sets input value data type. By default type is <code>'int-10'</code>, where last 2 digit says about value's base. 10 is decimal, 16 is hexadecimal etc. You can use all 2 digital bases from 02 (binar) to 36. Also you can use type <code>'string'</code>. If you use string valut type that means that you cant switch option eachSymbol to false. And you must set up your custom alphabet for string.
+        <code>type</code>  - Sets value's datatype. By default type is <code>'int-10'</code> (it means that value's datatype is integer and last 2 digit says about value's base - 10 is decimal, 16 is hexadecimal etc). You can use all 2 digital bases from 02 (binar) to 36 (0-9a-z). Also you can use type <code>'string'</code>. If you use string value type that means that you can't switch option <code>eachSymbol</code> to false. And you must set up your custom alphabet for string type.
       </li>
       <li>
-        <code>alphabet</code> - Sets alphabet's order and symbols. For example for 'int-16' type, alphabet is '0132456789abcdef'. For integer types alphabet calculates automaticaly. For string type - alphabet sets up by designer.
+        <code>alphabet</code> - Sets order and symbols for alphabet. For example for 'int-16' type, alphabet is '0132456789abcdef'. For integer types alphabet calculates automaticaly. For string type - alphabet sets up by designer. Example: <code>alphabet:"abc"</code> means that user can turn wheel between 3 values "a", "b", "c".
       </li>
     </ol>
 
     <h4>Listening for events:</h4>
-
     <ol>
       <li>wheel</li>
       <li>mousewheel</li>
@@ -189,13 +208,14 @@
 
     <h2><a name="lightweight-version" class="anchor" href="#lightweight-version"><span class="octicon octicon-link"></span></a>Lightweight version</h2>
 
-    <p>There is available light weight version of plugin 2.5 KB - minimized, that equivalent for regular version of plugin with options : <code>eachSymbol = true, type = 'int-10', changeSign = false</code><br></p>
+    <p>There is available light weight version of plugin 2.5 KB - minimized, that equivalent for regular version of plugin with options : <code>eachSymbol: true</code>, <code>type: 'int-10'</code>, <code>changeSign: false</code>, <code>scrollBlock: true </code><br></p>
 
     <h2><a name="download" class="anchor" href="#download"><span class="octicon octicon-link"></span></a>Download</h2>
     <section id="downloads">
       <a class="zip_download_link" href="https://github.com/zefirka/jquerySelectorWheel/zipball/master">Download this project as a .zip file</a>
       <a class="tar_download_link" href="https://github.com/zefirka/jquerySelectorWheel/tarball/master">Download this project as a tar.gz file</a>
     </section>
+
 
     <h2><a name="development" class="anchor" href="#development"><span class="octicon octicon-link"></span></a>Development</h2>
 
@@ -209,7 +229,7 @@
         Updating css with <strong>LESSC</strong>: <code>lessc dev/main.less &gt; jqSelectorWheel.css</code><br>
       </li>
       <li>
-        Includeing plugins and packages: <code>&lt;script src="/bower_components/jquery/index.js"&gt;</code><br>
+        Including plugins and packages: <code>&lt;script src="/bower_components/jquery/index.js"&gt;</code><br>
       </li>
     </ol>
       </section>
