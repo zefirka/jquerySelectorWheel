@@ -2,6 +2,7 @@
   display: inline-block;
   height: 26px;
   padding: 2px;
+  text-align: left;
   background: #2a262a;
   background: -moz-linear-gradient(0deg, #2a262a 20%, #797979 100%);
   background: -webkit-linear-gradient(0deg, #2a262a 20%, #797979 100%);
@@ -22,7 +23,7 @@
   min-width: 10px;
   text-align: center;
   display: inline-block;
-  padding: 2px 3px;
+  padding: 0px 3px 4px 3px;
   cursor: pointer;
   -webkit-box-shadow: 3px -1px 2px 0px rgba(0, 0, 0, 0.85);
   -moz-box-shadow: 3px -1px 2px 0px rgba(0, 0, 0, 0.85);

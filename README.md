@@ -64,8 +64,8 @@ If you want use hidden input to collect value of wheel selector control - switch
 **Custom alphabet**
 To customize alphabet and symbol order use next two properties in **settings.json**:
 
-1. <code>type</code>  - Sets input value data type. By default type is <code>'int-10'</code>, where last 2 digit says about value's base. 10 is decimal, 16 is hexadecimal etc. You can use all 2 digital bases from 02 (binar) to 36. Also you can use type <code>'string'</code>. If you use string valut type that means that you cant switch option eachSymbol to false. And you must set up your custom alphabet for string.
-2. <code>alphabet</code> - Sets alphabet's order and symbols. For example for 'int-16' type, alphabet is '0132456789abcdef'. For integer types alphabet calculates automaticaly. For string type - alphabet sets up by designer.
+1. <code>type</code>  - Sets value's datatype. By default type is <code>'int-10'</code> (it means that value's datatype is integer and last 2 digit says about value's base - 10 is decimal, 16 is hexadecimal etc). You can use all 2 digital bases from 02 (binar) to 36 (0-9a-z). Also you can use type <code>'string'</code>. If you use string value type that means that you can't switch option <code>eachSymbol</code> to false. And you must set up your custom alphabet for string type.
+2. <code>alphabet</code> - Sets order and symbols for alphabet. For example for 'int-16' type, alphabet is '0132456789abcdef'. For integer types alphabet calculates automaticaly. For string type - alphabet sets up by designer. Example: <code>alphabet:"abc"</code> means that user can turn wheel between 3 values "a", "b", "c".
 
 **Listening for events**
 
@@ -77,11 +77,11 @@ To customize alphabet and symbol order use next two properties in **settings.jso
 1 per 40 px scroll.
 
 ##Lightweight version##
-There is available light weight version of plugin 2.5 KB - minimized, that equivalent for regular version of plugin with options : <code>eachSymbol = true, type = 'int-10', changeSign = false</code><br>
+There is available light weight version of plugin 2.5 KB - minimized, that equivalent for regular version of plugin with options : <code>eachSymbol: true</code>, <code>type: 'int-10'</code>, <code>changeSign: false</code>, <code>scrollBlock: true </code><br>
 
 ##Development##
 bower files unpacking into bower_components directory; Dependencies is: **jQuery** and **jQuery.mousecheel**.
 
 1. Installing components with **bower** for development: <code>bower instal</code> <br>
 2. Updating css with **LESSC**: <code>lessc dev/main.less &gt; jqSelectorWheel.css</code><br>
-3. Includeing plugins and packages: <code>&lt;script src="/bower_components/jquery/index.js"&gt;</script></code><br>
+3. Including plugins and packages: <code>&lt;script src="/bower_components/jquery/index.js"&gt;</script></code><br>

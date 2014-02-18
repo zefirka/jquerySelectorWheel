@@ -7,7 +7,6 @@
       'valueLength' : $container.attr("length")===undefined ? 3 : parseInt($container.attr("length")),
       'valueFrom'  : $container.attr("valueFrom")===undefined ? 0 : $container.attr("valueFrom"),
       'valueTo'  : $container.attr("valueTo")===undefined ? 999 : $container.attr("valueTo"),
-      "capture" : true,
       "hiddenInput" : {
         "enabled" : false
       }
@@ -48,6 +47,15 @@
       })
     }
     
+    that.setScrollBlock = function(){
+      $('body').on({
+        'mousewheel': function(e) {
+          if(e.target.parentNode.parentNode.id == $container[0].id){
+            e.preventDefault();
+            e.stopPropagation();
+          }
+      }});
+    }
 
     that.bindEventsEachSymbol = function(cell, position){
       return function(e){
@@ -71,6 +79,7 @@
         that.setMask($container.value.toString());
       }
       
+      that.setScrollBlock();
       var hidden = settings.hiddenInput.enabled ? that.hiddenInput.trigger({"type":"change","val":$container.value}) : null;
     }
   
