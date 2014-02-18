@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="jquery.SelectorWheel : Simple jQuery wheel selector plugin." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>jquery.SelectorWheel</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/zefirka/jquerySelectorWheel">View on GitHub</a>
+
+          <h1 id="project_title">jquery.SelectorWheel</h1>
+          <h2 id="project_tagline">Simple jQuery wheel selector plugin.</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/zefirka/jquerySelectorWheel/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/zefirka/jquerySelectorWheel/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="selector-wheel--jquery-plugin" class="anchor" href="#selector-wheel--jquery-plugin"><span class="octicon octicon-link"></span></a>Selector Wheel : jQuery Plugin</h1>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Including files into DOM:<br></p>
+
+<pre>
+    &lt;script src="jquery.SelectorWheel.js"&gt;&lt;/script&gt;
+    &lt;link rel="stylesheet" type="text/css" href="jqSelectorWheel.css"&gt;
+</pre>
+
+<pre>
+    &lt;div id='myPrettyID' class='SelectorWheel' 
+                            length='4' 
+                            valueTo='8888' 
+                            valueFrom='0' 
+                            value="666&gt;&lt;/div&gt;
+    &lt;script&gt; 
+        var jqSelectorWheel = $("#myPrettyID").SelectorWheel({
+            //settings JSON
+        });
+    &lt;/script&gt; 
+</pre>
+
+<p>Attributes <code>length</code>, <code>value</code>, <code>valueFrom</code>, <code>valueTo</code>  is not required; You can set up these in settings json.</p>
+
+<p><strong>Settings JSON</strong></p>
+
+<pre>
+|=============|=======================|===========================================|
+|  PROPERTY   |  STD VALUE            |      DESCRIPTION                          |
+|=============|=======================|===========================================| 
+| value       | 'value' attr or 0     | Initial value of controller               |
+|-------------|-----------------------|-------------------------------------------|
+| symCount    | 'length' attr or 3    | Count of symbol cells                     |
+|-------------|-----------------------|-------------------------------------------|
+| valueFrom   | 'valueFrom' attr or 0 | Minimal value of controller               |
+|-------------|-----------------------|-------------------------------------------|
+| valueTo     | 'valueTo' attr or 999 | Maximal value of controller               |
+|-------------|-----------------------|-------------------------------------------|
+| changeSign  | false                 | Make value sign opposite by click or not  |
+|-------------|-----------------------|-------------------------------------------|
+| sensetivity | 1                     | Value from 0 to 1. Multiplied by scroll   |
+|-------------|-----------------------|-------------------------------------------|
+| capture     | true                  | Capture event for scroll window           |
+|-------------|-----------------------|-------------------------------------------|
+| eachSymbol  | true                  | Make every symbol change independently    |
+|-------------|-----------------------|-------------------------------------------|
+</pre>
+
+<p><strong>Hidden input</strong>
+If you want use hidden input to collect value of wheel selector control - switch hiddenInput.enabled value to true and set up hiddenInput.id and hiddenInput.name for your input. Value of input will update automaticaly. </p>
+
+<pre>
+|-------------|-----------------------|-------------------------------------------|
+| hiddenInput | Object{}              | Hidden input to collect values            |
+|-------------|-----------------------|-------------------------------------------|
+| * enabled   | false                 | Enable hidden input or not                |
+|-------------|-----------------------|-------------------------------------------|
+| * id        | undefined             | 'ID' attribute of hidden input            |
+|-------------|-----------------------|-------------------------------------------|
+| * name      | undefined             | 'name' attribute of hidden input          |
+|-------------|-----------------------|-------------------------------------------|
+</pre>
+
+<p><strong>Custom alphabet</strong>
+To customize alphabet and symbol order use next two properties in <strong>settings.json</strong>:</p>
+
+<ol>
+<li>
+<code>type</code>  - Sets input value data type. By default type is <code>'int-10'</code>, where last 2 digit says about value's base. 10 is decimal, 16 is hexadecimal etc. You can use all 2 digital bases from 02 (binar) to 36. Also you can use type <code>'string'</code>. If you use string valut type that means that you cant switch option eachSymbol to false. And you must set up your custom alphabet for string.</li>
+<li>
+<code>alphabet</code> - Sets alphabet's order and symbols. For example for 'int-16' type, alphabet is '0132456789abcdef'. For integer types alphabet calculates automaticaly. For string type - alphabet sets up by designer.</li>
+</ol><p><strong>Listening for events</strong></p>
+
+<ol>
+<li>wheel</li>
+<li>mousewheel</li>
+<li>DOMMouseScroll</li>
+<li>MozMousePixelScroll</li>
+</ol><p>1 per 40 px scroll.</p>
+
+<h2>
+<a name="lightweight-version" class="anchor" href="#lightweight-version"><span class="octicon octicon-link"></span></a>Lightweight version</h2>
+
+<p>There is available light weight version of plugin 2.5 KB - minimized, that equivalent for regular version of plugin with options : <code>eachSymbol = true, type = 'int-10', changeSign = false</code><br></p>
+
+<h2>
+<a name="development" class="anchor" href="#development"><span class="octicon octicon-link"></span></a>Development</h2>
+
+<p>bower files unpacking into bower_components directory; Dependencies is: <strong>jQuery</strong> and <strong>jQuery.mousecheel</strong>.</p>
+
+<ol>
+<li>Installing components with <strong>bower</strong> for development: <code>bower instal</code> <br>
+</li>
+<li>Updating css with <strong>LESSC</strong>: <code>lessc dev/main.less &gt; jqSelectorWheel.css</code><br>
+</li>
+<li>Includeing plugins and packages: <code>&lt;script src="/bower_components/jquery/index.js"&gt;</code><br>
+</li>
+</ol>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">jquery.SelectorWheel maintained by <a href="https://github.com/zefirka">zefirka</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
