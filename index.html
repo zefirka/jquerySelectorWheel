@@ -19,10 +19,6 @@
   </head>
 
   <body>
-
-    
-
-    <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
           <h1 id="project_title">jqSelectorWheel</h1>
@@ -49,7 +45,7 @@
       <a class="anchor" href="#description" name="description"><span class="octicon octicon-link"></span></a>Description
     </h2>
 
-    <p><strong>jqSelectorWheel</strong> is a simple jQuery plugin that provides behavior of wheel symbol selector.</p>
+    <p><strong>jqSelectorWheel</strong> is a simple jQuery plugin that provides behavior of wheel symbol selector. Plugin uses <a href="https://github.com/brandonaaron/jquery-mousewheel">jqeury-mousewheel</a></p>
     <span class='example'>Example:</span><div id='myPrettyID1' class='jqSelectorWheel' length='3' valueTo='999' valueFrom='000' value="365" ></div>
 
     <h2>
@@ -60,6 +56,7 @@
 
     <pre>
 
+        &lt;script src="jquery.mousewheel.js"&gt;&lt;/script&gt;
         &lt;script src="jquery.SelectorWheel.js"&gt;&lt;/script&gt;
         &lt;link rel="stylesheet" type="text/css" href="jqSelectorWheel.css"&gt;
     </pre>
@@ -206,9 +203,13 @@
     </ol>
     <p>1 per 40 px scroll.</p>
 
-    <h2><a name="lightweight-version" class="anchor" href="#lightweight-version"><span class="octicon octicon-link"></span></a>Lightweight version</h2>
+    <h2><a name="lightweight-version" class="anchor" href="#lightweight-version"><span class="octicon octicon-link"></span></a>Versions</h2>
 
+    <h4>Lightweight version</h4>
     <p>There is available light weight version of plugin 2.5 KB - minimized, that equivalent for regular version of plugin with options : <code>eachSymbol: true</code>, <code>type: 'int-10'</code>, <code>changeSign: false</code>, <code>scrollBlock: true </code><br></p>
+
+    <h4>Mousewheel-included version</h4>
+    <p>There is available version with already included mousewheel event emitter from jquery.mousewheel. If you use this version you don't need to include jquery.mousewheel into your HTML<br></p>
 
     <h2><a name="download" class="anchor" href="#download"><span class="octicon octicon-link"></span></a>Download</h2>
     <section id="downloads">
@@ -227,6 +228,9 @@
       </li>
       <li>
         Updating css with <strong>LESSC</strong>: <code>lessc dev/main.less &gt; jqSelectorWheel.css</code><br>
+      </li>
+      <li>
+        Updating minified versions : <code>sh update.sh</code>
       </li>
       <li>
         Including plugins and packages: <code>&lt;script src="/bower_components/jquery/index.js"&gt;</code><br>
